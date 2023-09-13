@@ -31,11 +31,12 @@ jobs:
           meson ..
           ninja
 
+      # cd does not persist across steps
       - name: upload build artifact
         uses: actions/upload-artifact@v3
         with:
           name: sshfs
-          path: sshfs
+          path: build/sshfs
 
       - name: make ssh into localhost without prompt possible for tests
         run: |
@@ -43,4 +44,6 @@ jobs:
           cat ~/.ssh/id_rsa.pub > ~/.ssh/authorized_keys
 
       - name: run tests
-        run: python3 -m pytest test/
+        run: |
+          cd build
+          python3 -m pytest test/

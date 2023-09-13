@@ -80,6 +80,8 @@ def test_sshfs(
             [
                 "ssh",
                 "-o",
+                "StrictHostKeyChecking=no",
+                "-o",
                 "KbdInteractiveAuthentication=no",
                 "-o",
                 "ChallengeResponseAuthentication=no",
