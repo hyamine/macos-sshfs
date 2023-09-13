@@ -20,7 +20,7 @@ jobs:
           python-version: '3.10' 
 
       - name: Install ninja 
-        run: apt install ninja-build -y
+        run: sudo apt install ninja-build -y
 
       - name: Install meson
         run: pip3 install meson
@@ -31,4 +31,3 @@ jobs:
           meson ..
           ninja
           python3 -m pytest test/
-          
