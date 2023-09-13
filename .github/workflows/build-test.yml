@@ -19,8 +19,8 @@ jobs:
         with:
           python-version: '3.10' 
 
-      - name: Install ninja 
-        run: sudo apt install ninja-build -y
+      - name: Install build dependencies
+        run: sudo apt-get install valgrind gcc clang ninja-build meson python3-pytest libglib2.0-dev libfuse3-dev
 
       - name: Install meson
         run: pip3 install meson
