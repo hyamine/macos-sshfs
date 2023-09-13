@@ -30,4 +30,17 @@ jobs:
           mkdir build; cd build
           meson ..
           ninja
-          python3 -m pytest test/
+
+      - name: upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: sshfs
+          path: sshfs
+
+      - name: make ssh into localhost without prompt possible for tests
+        run: |
+          ssh-keygen -b 2048 -t rsa  -f ~/.ssh/id_rsa -q -N ""
+          cat ~/.ssh/id_rsa.pub > ~/.ssh/authorized_keys
+
+      - name: run tests
+        run: python3 -m pytest test/
