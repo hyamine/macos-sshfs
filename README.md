@@ -71,7 +71,7 @@ umount mountpoint
 
 
 First, download the latest SSHFS release from
-https://github.com/libfuse/sshfs/releases. You also need [libfuse](http://github.com/libfuse/libfuse) 3.1.0 or newer (or a
+https://github.com/deadbeefsociety/sshfs/releases. You also need [libfuse](http://github.com/libfuse/libfuse) 3.1.0 or newer (or a
 similar library that provides a libfuse3 compatible interface for your operating
 system). Finally, you need the [Glib](https://developer.gnome.org/glib/stable/) library with development headers (which should be
 available from your operating system's package manager).
