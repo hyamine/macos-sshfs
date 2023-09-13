@@ -27,7 +27,7 @@ very simple to use - there's nothing to do on the server-side.
 SSHFS is shipped by all major Linux distributions and has been in
 production use across a wide range of systems for many years. However,
 at present SSHFS does not have any active, regular contributors, and
-there are a number of known issues (see the [bugtracker](https://github.com/libfuse/sshfs/issues)).  The current
+there are a number of known issues (see the [bugtracker](https://github.com/deadbeefsociety/sshfs/issues)).  The current
 maintainer continues to apply pull requests and makes regular
 releases, but unfortunately has no capacity to do any development
 beyond addressing high-impact issues. When reporting bugs, please
@@ -111,7 +111,7 @@ mailing list (subscribe at
 https://lists.sourceforge.net/lists/listinfo/fuse-sshfs).
 
 Please report any bugs on the GitHub issue tracker at
-https://github.com/deadbeefsociety/libfuse/issues.
+https://github.com/deadbeefsociety/sshfs/issues.
 
 ## Packaging Status
 
