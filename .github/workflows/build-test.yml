@@ -2,6 +2,8 @@ name: build and test
 on:
   push:
 
+  pull_request:
+
   workflow_dispatch: # this is a nice option that will enable a button w/ inputs
     inputs:
       git-ref:
