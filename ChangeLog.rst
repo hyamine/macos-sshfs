@@ -1,3 +1,8 @@
+Release 3.7.4a (2023-09-22)
+--------------------------
+* Revert: Support request size negotiation and increased throughput on high-latency connections
+due to user reported bug
+
 Release 3.7.4 (2023-09-14)
 --------------------------
 
