@@ -64,10 +64,10 @@ jobs:
       run: ninja
 
     - name: upload build artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: sshfs
-          path: build/sshfs
+      uses: actions/upload-artifact@v3
+      with:
+        name: sshfs
+        path: build/sshfs
 
     - name: Test
       working-directory: ${{github.workspace}}/build
