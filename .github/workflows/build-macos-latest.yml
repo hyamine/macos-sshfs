@@ -1,0 +1,85 @@
+name: build-macos-latest
+
+on: [push, pull_request]
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work equally
+    # well on Windows or Mac. You can convert this to a matrix build if you need
+    # cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        compiler: [gcc, clang]
+        include:
+          - compiler: gcc
+            cc: gcc
+            cxx: g++
+          - compiler: clang
+            cc: clang
+            cxx: clang++
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+
+    - name: Install libraries
+      run: |
+        checkPkgAndInstall()
+        {
+          while [ $# -ne 0 ]
+          do
+            rm -f '/usr/local/bin/2to3'
+            if brew ls --versions $1 ; then
+              brew upgrade $1
+            else
+              brew install $1
+            fi
+            shift
+          done
+        }
+        checkPkgAndInstall ccache meson macfuse glib
+
+    - name: Create Build Environment
+      # Some projects don't allow in-source building, so create a separate build directory
+      # We'll use this as our working directory for all subsequent commands
+      run:  mkdir ${{github.workspace}}/build
+
+    - name: Configure meson
+      # Use a bash shell so we can use the same syntax for environment variable
+      # access regardless of the host operating system
+      shell: bash
+      working-directory: ${{github.workspace}}/build
+      run: meson
+
+    - name: Build
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      run: ninja
+
+    - name: upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: sshfs
+          path: build/sshfs
+
+    - name: Test
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      run: |
+        ssh-keygen -q -t ed25519 -C "your_email@example.com" -f "${HOME}/.ssh/id_ed25519"
+        eval "$(ssh-agent -s)"
+        ssh-add ~/.ssh/id_ed25519
+        cat ~/.ssh/id_ed25519.pub >> ~/.ssh/authorized_keys
+        mkdir -p "${HOME}/.ssh"
+        echo "Host *" > "${HOME}/.ssh/config"
+        echo "	StrictHostKeyChecking no" >> "${HOME}/.ssh/config"
+        chmod 400 "${HOME}/.ssh/config"
+        python3 -m pytest test/
+
